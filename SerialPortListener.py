@@ -42,14 +42,22 @@ class SimpleFOCSerialScope(QQuickItem):
     Product.RWProperty(vars(), list , "headers", cb_headers)
 
     @Slot()
-    def beginListneing(self):
+    def tryConnect(self):
+        if self.connector.isRunning():
+            serial_port = self.connector._serial_port
+            if serial_port is not None and serial_port.isOpen():
+                return
         try:
             serial_port = serial.Serial(self.port, self.bauds, serial.EIGHTBITS, serial.PARITY_NONE, serial.STOPBITS_ONE)
             if not serial_port.isOpen():
-                serial_port = None
-        except:
-            serial_port = None
+                return
+        except Exception:
+            return
         self.connector.beginListneing(serial_port)
+
+    @Slot()
+    def beginListneing(self):
+        self.tryConnect()
 
 
 class SimpleFOCParsingException(Exception):
@@ -83,7 +91,13 @@ class SerialPortListener(QtCore.QThread):
             self.add_dtype(struct_name, members)
         
     def beginListneing(self, serial_port = None):
+        old_port = self._serial_port
         self._serial_port = serial_port
+        if old_port is not None and old_port is not serial_port:
+            try:
+                old_port.close()
+            except Exception:
+                pass
         self.start()
 
     def add_dtype(self, struct_name, members):

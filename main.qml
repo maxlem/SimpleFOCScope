@@ -10,6 +10,8 @@ ApplicationWindow
     width: 800
     height: 600
 
+    property bool frozen: false
+
     SimpleFOCSerialScope
     {
         id: scope_
@@ -31,9 +33,17 @@ ApplicationWindow
         repeat: true
         onTriggered:
         {
-            if(ds_.dirty)
+            if(!frozen && ds_.dirty)
                 ds_.refresh();
         }
+    }
+
+    Timer
+    {
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: scope_.tryConnect()
     }
     ColumnLayout
     {
@@ -41,7 +51,8 @@ ApplicationWindow
         Text{text: "port: " + scope_.port}
         Text{text: "bauds: " + scope_.bauds}
         Text{text: "headers: " + scope_.headers}
-        Button{text: "connect"; onClicked: scope_.beginListneing()}
+        Button{text: "connect"; onClicked: scope_.tryConnect()}
+        CheckBox{text: "freeze"; checked: frozen; onCheckedChanged: frozen = checked}
         RowLayout
         {
             Layout.fillWidth: true
