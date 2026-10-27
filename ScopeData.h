@@ -4,12 +4,6 @@
 #include <stdint.h>
 
 struct ScopeData {
-  float target;
-  float angle;
-  float uq;
-  uint32_t enabled;
-  uint32_t status;
-  uint32_t n_fault;
   float ia;
   float ib;
   float ic;
