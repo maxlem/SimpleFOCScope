@@ -19,7 +19,7 @@ ApplicationWindow
             id: ds_
             chart: chart_
         }
-        port: "/dev/ttyACM0"
+        port: "/dev/serial/by-id/usb-Adafruit_Adafruit_Feather_M4_CAN_E35973025339473237202020FF112F1D-if00"
         bauds: 115200
         headers: ['ScopeData.h']
     }
