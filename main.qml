@@ -21,7 +21,7 @@ ApplicationWindow
         }
         port: "/dev/ttyACM0"
         bauds: 115200
-        headers: ['demo.h']
+        headers: ['ScopeData.h']
     }
 
     Timer

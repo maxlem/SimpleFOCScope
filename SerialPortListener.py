@@ -18,7 +18,7 @@ class SimpleFOCSerialScope(QQuickItem):
         self._port = ""
         self._bauds = ""
         self._traces = None
-        self._headers = ['demo.h']
+        self._headers = ['ScopeData.h']
         self.connector = SerialPortListener()
         self.connector.parseHeaders(self.headers)
 
