@@ -62,7 +62,7 @@ ApplicationWindow
                 CheckBox
                 {
                     text: modelData
-                    onCheckedChanged: ds_.toggleDatasource(modelData)
+                    onClicked: ds_.setChannelEnabled(modelData, checked)
                     Component.onCompleted: checked = true
                 }
             }
@@ -95,7 +95,7 @@ ApplicationWindow
                 id: axisX
                 min: ds_.xMin
                 max: ds_.xMax
-
+                titleText: "time (s)"
             }
         }
     }
